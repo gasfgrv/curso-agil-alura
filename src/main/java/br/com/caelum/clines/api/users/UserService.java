@@ -23,18 +23,21 @@ public class UserService {
     }
 
     public UserView showUserBy(long id) {
-        var user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find user"));
+        var user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find user"));
 
         return viewMapper.map(user);
     }
 
-    public long createUserBy(UserForm form) {
+    public Long createUserBy(UserForm form) {
         repository.findByEmail(form.getEmail()).ifPresent(user -> {
             throw new ResourceAlreadyExistsException("User already exists");
         });
 
         var user = formMapper.map(form);
 
-        return repository.save(user).getId();
+        repository.save(user);
+
+        return user.getId();
     }
 }

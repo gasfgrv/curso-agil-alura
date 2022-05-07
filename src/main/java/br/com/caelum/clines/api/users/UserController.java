@@ -37,9 +37,7 @@ public class UserController {
     @PostMapping
     ResponseEntity<?> createBy(@RequestBody @Valid UserForm form) {
         var id = service.createUserBy(form);
-
-        var uri = URI.create("/user/").resolve(String.valueOf(id));
-
+        var uri = URI.create("/user/").resolve(id.toString());
         return created(uri).build();
     }
 
