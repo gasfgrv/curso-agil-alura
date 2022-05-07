@@ -18,12 +18,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "users")
 public class User {
 
-    public User(@NotNull String name, @NotNull String email, @NotNull String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,4 +31,9 @@ public class User {
     @NotNull
     private String password;
 
+    public User(@NotNull String name, @NotNull String email, @NotNull String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }
