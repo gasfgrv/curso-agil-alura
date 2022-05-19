@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    container_name: database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: clines
+    networks:
+      - commons-api
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+
+  api:
+    image: caelum/clines-api
+    container_name: api
+    environment:
+      DB_HOST: database
+    networks:
+      - commons-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+networks:
+  commons-api:
+    driver: bridge
